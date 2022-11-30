@@ -1,0 +1,76 @@
+#include <SoftwareSerial.h>
+
+SoftwareSerial bt(6, 7);
+int m1_1 = 10;
+int m1_2 = 11;
+int m2_1 = 13;
+int m2_2 = 12;
+
+void setup() {
+  Serial.begin(9600);
+  bt.begin(9600);
+  Serial.println("init");
+  pinMode(m1_1, OUTPUT);
+  pinMode(m1_2, OUTPUT);
+  pinMode(m2_1, OUTPUT);
+  pinMode(m2_2, OUTPUT);
+}
+
+void loop() {
+  if (bt.available()) {
+    char inByte = bt.read();
+    // Serial.write(inByte);
+    delay(100);
+    Serial.println("byte:");
+    Serial.println(inByte);
+
+    if (inByte == 'F') {
+      Serial.write("F");
+      analogWrite(m1_1, 0);
+      analogWrite(m1_2, 200);
+      analogWrite(m2_1, 0);
+      analogWrite(m2_2, 200);
+      // digitalWrite(led1, HIGH);
+      // digitalWrite(led2, HIGH);
+    }
+    if (inByte == 'B') {
+      Serial.write("B");
+      analogWrite(m1_1, 200);
+      analogWrite(m1_2, 0);
+      analogWrite(m2_1, 200);
+      analogWrite(m2_2, 0);
+      // digitalWrite(led1, LOW);
+      // digitalWrite(led2, LOW);
+    }
+    if (inByte == 'L') {
+      Serial.write("L");
+      analogWrite(m1_1, 0);
+      analogWrite(m1_2, 200);
+      analogWrite(m2_1, 200);
+      analogWrite(m2_2, 0);
+      // digitalWrite(led1, LOW);
+      // digitalWrite(led2, HIGH);
+    }
+
+    if (inByte == 'R') {
+      Serial.println("R");
+      analogWrite(m1_1, 200);
+      analogWrite(m1_2, 0);
+      analogWrite(m2_1, 0);
+      analogWrite(m2_2, 200);
+      // digitalWrite(led1, HIGH);
+      // digitalWrite(led2, LOW);
+    }
+
+    if (inByte == 'S') {
+      Serial.println("S");
+      analogWrite(m1_1, 0);
+      analogWrite(m1_2, 0);
+      analogWrite(m2_1, 0);
+      analogWrite(m2_2, 0);
+      // digitalWrite(led1, LOW);
+      // digitalWrite(led2, LOW);
+    }
+  }
+
+}
